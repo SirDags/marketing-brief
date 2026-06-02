@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Marketing Aggregator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        font-serif { font-family: 'Playfair Display', serif; }
+    </style>
+</head>
+<body class="bg-slate-50/50 text-slate-900 min-h-screen antialiased">
+
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 px-8 py-4 flex flex-col xl:flex-row justify-between items-center gap-4 shadow-xs">
+        <div class="flex flex-col md:flex-row items-center gap-6 w-full xl:w-auto">
+            <div>
+                <h1 class="text-2xl font-black tracking-tighter text-slate-900 font-serif">MKTG <span class="text-red-600">//</span> BRIEF</h1>
+                <p class="text-[11px] font-mono uppercase tracking-widest text-slate-400 mt-0.5">Advertising Intelligence Depot // Dublin</p>
+            </div>
+            
+            <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 w-full md:w-auto gap-1">
+                <button id="view-industry" onclick="setViewMode('industry')" class="bg-white text-slate-900 px-4 py-2 rounded-lg text-xs font-bold shadow-xs cursor-pointer transition-all">📰 Industry News</button>
+                <button id="view-clients" onclick="setViewMode('clients')" class="text-slate-600 px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer hover:text-slate-900 transition-all">💼 Client Tracker</button>
+                <button id="view-social" onclick="setViewMode('social')" class="text-slate-600 px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer hover:text-slate-900 transition-all">🔥 Social Media</button>
+            </div>
+        </div>
+        
+        <div class="flex flex-wrap items-center gap-4">
+            <!-- DATE RANGE PICKER -->
+            <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
+                <button id="date-all" onclick="filterDate('all')" class="date-btn bg-white text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-xs cursor-pointer">🕒 All Time</button>
+                <button id="date-year" onclick="filterDate('year')" class="date-btn text-slate-600 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer hover:bg-white/60 transition-all">Current Year</button>
+                <button id="date-30" onclick="filterDate('30')" class="date-btn text-slate-600 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer hover:bg-white/60 transition-all">Past 30d</button>
+                <button id="date-7" onclick="filterDate('7')" class="date-btn text-slate-600 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer hover:bg-white/60 transition-all">Past 7d</button>
+            </div>
+
+            <!-- REGIONAL SELECTOR -->
+            <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
+                <button id="loc-all" onclick="filterLocation('all')" class="loc-btn bg-white text-slate-900 px-4 py-1.5 rounded-lg text-xs font-bold shadow-xs cursor-pointer">🌐 Global</button>
+                <button id="loc-IE" onclick="filterLocation('IE')" class="loc-btn text-slate-600 px-4 py-1.5 rounded-lg text-xs font-semibold cursor-pointer hover:bg-white/60 transition-all">🇮🇪 IE</button>
+                <button id="loc-UK" onclick="filterLocation('UK')" class="loc-btn text-slate-600 px-4 py-1.5 rounded-lg text-xs font-semibold cursor-pointer hover:bg-white/60 transition-all">🇬🇧 UK</button>
+                <button id="loc-US" onclick="filterLocation('US')" class="loc-btn text-slate-600 px-4 py-1.5 rounded-lg text-xs font-semibold cursor-pointer hover:bg-white/60 transition-all">🇺🇸 US</button>
+                <button id="loc-ASIA" onclick="filterLocation('ASIA')" class="loc-btn text-slate-600 px-4 py-1.5 rounded-lg text-xs font-semibold cursor-pointer hover:bg-white/60 transition-all">🌏 ASIA</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6 p-8">
+        <div id="industry-view" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+        <div data-country="US" data-date="2026-05-29" class="news-card bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-200 md:col-span-2 lg:col-span-3 flex flex-col lg:flex-row min-h-[350px]">
+            <div class="bg-slate-900 lg:w-1/2 p-8 flex flex-col justify-between text-white border-b lg:border-b-0 lg:border-r border-gray-800">
+                <div><span class="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Featured Brief</span><p class="text-xs text-slate-400 mt-4 font-mono">MarketingTech Global • 2026-05-29</p></div>
+                <div class="text-xs font-semibold text-red-500 tracking-wider mt-4">🇺🇸 PRIMARY CONTEXT: US</div>
+            </div>
+            <div class="p-8 flex flex-col justify-between lg:w-1/2 bg-gradient-to-br from-white to-slate-50">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-serif font-black text-slate-900 tracking-tight leading-tight hover:text-red-600 transition-colors"><a href="https://www.marketingtechnews.net/news/ai-is-moving-more-ad-production-in-house/" target="_blank">How AI is moving more ad production in-house</a></h2>
+                    <p class="text-slate-600 text-sm mt-4 leading-relaxed font-sans">Top dynamic market brief overview. Inspect source metrics directly via standard hub link anchors.</p>
+                </div>
+                <div class="pt-4 border-t border-slate-100 mt-6 text-xs text-slate-400 font-mono">Priority Direct Delivery // Dublin HQ</div>
+            </div>
+        </div>
+        <div data-country="US" data-date="2026-05-27" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">MarketingTech Global • 2026-05-27</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.marketingtechnews.net/news/how-to-scale-pentesting-across-cloud-environments/" target="_blank">How to scale pentesting across cloud environments</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-27" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">MarketingTech Global • 2026-05-27</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.marketingtechnews.net/news/google-search-optimisation-pushes-traditional-search-results-further-down-the-page/" target="_blank">Google pushes traditional search results further down the page</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-05-26" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">MarketingTech Global • 2026-05-26</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.marketingtechnews.net/news/why-your-crm-needs-a-product-importer/" target="_blank">Why your CRM needs a product importer</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-25" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">MarketingTech Global • 2026-05-25</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.marketingtechnews.net/news/consumers-useful-ai-ads-canva-report/" target="_blank">Canva finds consumers want useful AI ads, but value human input</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-20" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">MarketingTech Global • 2026-05-20</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.marketingtechnews.net/news/google-ai-search-shopping-content-verification/" target="_blank">Google expands AI Search, shopping, and content verification tools</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-05-18" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">MarketingTech Global • 2026-05-18</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.marketingtechnews.net/news/ex-google-and-databricks-engineers-launch-new-martech-platform/" target="_blank">Ex-Google and Databricks engineers launch martech platform</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-14" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">MarketingTech Global • 2026-05-14</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.marketingtechnews.net/news/linkedin-plans-paid-for-events-to-court-the-creator-economy/" target="_blank">LinkedIn plans paid-for events to court the creator economy</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-14" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">MarketingTech Global • 2026-05-14</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.marketingtechnews.net/news/gen-ai-sponsored-snaps-offer-financial-education-to-gen-z/" target="_blank">Gen AI sponsored Snaps offer financial education to Gen Z</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-14" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">MarketingTech Global • 2026-05-14</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.marketingtechnews.net/news/openai-chatgpt-ads-ecommerce-product-feeds/" target="_blank">OpenAI makes ChatGPT ads easier for ecommerce brands</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-06-01</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxPdFJzVUMtZjZKUkM2cjB6VEVlT1BSREE2SzNGbXRXeVMtaWhpU1NhUGlNMk92SDdmRkE0ZFBKQnA3ZUNuX2NBNkpkTEh6WVRZX25CaUw0RDBxVVBpSVloaDRPcUVPOTJwTnhGSzNibUFPRnMxNW9rZ2pUOFVFZjJHMW15MnppU1JCNkllSkhLd1JOZUE?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Specsavers 'Mini Soaps' via 7RED Engine, EssenceMediacom - adnews.com.au</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-01-09" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-01-09</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiakFVX3lxTE5PN0xEazB3SlJWS3dIMW8tT2trWGZsTFVLMGhKNF85eXF3dDV3ZWR1a2xKVzVkbGxVYk01SWNaU0NUQmhUbjhJby1fX296a29hbDlpQ3l1WlNPSko3TERRYTRqRlZ4Q0VhY0E?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Specsavers sponsors Ian Dempsey show - Marketing.ie</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-05-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-05-01</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMic0FVX3lxTE02cTN4ZHMzODNVNXpCak5uX1U0YmpfRURJdFVSMkJMU1VJRV9LcWVEaEZzUEV2dUZLUXZVYlBFc2Q3N3dZMWh5di00bkdsQTI1RF83QTQ2QndGVHFEREVZUHVCZUpRN2dXVVZWZlIyY0YtcWs?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Neglecting the CTO and Specsavers’ tagline tweak: Your Marketing Week - Marketing Week</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2025-10-10" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2025-10-10</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxPMWFnUEhEejM5bHZ5c2UyTjVHWFZWUmRsRF9BZ2VGWDJLTjlUV28tWWIyMUtZcUhWQTVQQ3puRzVFUC1VWU1GSmRUaFhsZE50SVVORXhpUm5aUVp4UWxOaWxpay1rTEJLZXBYaExad1BWcDJ2WWwzQ3VCS0lkcEZRR19ENTFqa2FYNEdvX1EtNFV1NV9oMjlwcnlrUk9jRU84eUthSG9fNlNyc0lWSUo1eEgyQUl5SHM4?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Specsavers boosts bookings with AI-powered, full-funnel omnichannel strategy - The Trade Desk</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-05-05" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-05-05</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMimgFBVV95cUxOMGNQeEVqeWMyZ1pUemdQM25FQWpZMGxER1RYYXRDUzRwMFoyUzV0RGtRVzlZcHcyZ2QzME9BVllfOTkzVHJTX08zc3FTSTIzTnRuWmpSRFMzUzh1YnRfOWpDSGFWa0IxcWhSVXE0U2YzTzJqd2wwa2pkN0EycHpUX1hILTlyTmZSVFVKWVRlcjgyN0h6WUFfVHlR?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Specsavers expands ‘Should’ve’ line to push all services - DecisionMarketing</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-05-26" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-05-26</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMixwFBVV95cUxPRExQRjBueG90TEJrUDZuNVpWUnZxUks3MC1uYnFhUUlmcEtrcDFTbTZ6Zkc3SU5BaElxUzN6Q05ka0Jyc0dsUERVVHZNVTU0SnE2OUpsaW5IRjdXWVBEQTNHRGdGRzRPVDZJd3VtWmZpeVd5UmFNR2hmWlZndjFvaWdad1h4dENCUERGSGtIbWFZajhEbFJPLXB2c0EtQnRMU2FiYnRfRmtST3djZm40QXVITEJyT3prOXJJbE5QVVp0S0c2TUtN?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Kerrygold Launches 'Make It Gold With Kerrygold,' a Campaign Built on Flavor, Craft & Irish Heritage - Perishable News</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-05-27" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-05-27</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMihgFBVV95cUxNUXVWaUZrTFNXQTE2YnNRc1FTeDdZLWk4SHFjZVRYUDg0ZVVnTnVPXzNFLUZSeXVYc0dYbmJUYzlLbE5oSEM2cDNsM0pGMmp0UEx1WVBjWWxmUm9YNVA2a0lpWFJoaXhBRXVmbUc2MzI3OXhBMy1HaDN0OVdVSzVjRHZVU2x1Zw?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Elevate Your Culinary Experience: Kerrygold’s New Campaign - Food & Beverage Magazine</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-03-11" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-03-11</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxQeE5Vc2YwMFdiUTFQN1NiaVpKU2d6elNucHdtN29JaEF6MWtzMFNSQmhBMjBuQjBtSVRQWklnenFpTlNoOEJYdVEwUDVWaHBCTE5TWG1WenIxUUhkdUJjLUJkRERKWnZBVTFqS2RJZWtqNURjQ2pPLXEtYkp5N2U2Yno5TTRfSDFNNTI1Nnl4N1VibVJ0c0Mzck9JUzl5eXZNQ1k4eUFn?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Kerrygold Wants the World to Celebrate St. Patrick’s Day ‘The Irish Way’ - Little Black Book | LBBOnline</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2023-10-13" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2023-10-13</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMi4gFBVV95cUxQclY5LXFEbWQ3UV9SMDhrT2RNSl8yQUtMTEhYRzdPbTU1NUh3bTBSOXBVWWJnVFBnYXhOdEdSdHJBdkFCendKZFF3ZF93ZXhNbWZrSWc2Ul8yanZnZmdGVmtBdkNpN0daN01kZnJWSEtYUzBFZWs2NTRYYlBkcC15LXk4TVQwb1IxcEdsLXRmRDVjYUlnQ0ZQVjdEblV0OU9nLU5UTjAtcDMtaHFsdl9Zbm81c1FTVXhRNlh4cGhsWTUxM0pvWXRUb2l2dUhudVlsa1ZZNXdiWDdDQWlpN3A2eFJ3?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Kerrygold’s masterclass in modern marketing: An all expenses paid trip for butter influencers - The Irish Times</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2024-03-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2024-03-01</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMi0AFBVV95cUxQOGhDeG01ZXZveEFEWEZzMVRQVTJMLXptNHdYcDg2c243UEc1cWd3UkF0QnpWWmRzS0VsRmgwOEpNNU14MU5hM0VSS1JHdHgycW40Zmd5aXhnVkU4WGhXNWRPdXBIUHJqbndVMTVrdDFqcXA1RGpCdUV1ZENWLTZwOHU4VmlHbDBOVVVGNW5xYlJ0QUhpVWdfd2N1QVNSdE9tbnRyenhSYzB3ZXVwblM3cnQySXNnckNSczI3Q3JtN2xpa1R1am1BbVZ5MnBrekVr?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">An Irish success story: how Róisín Hennerty made Kerrygold one of the best-selling butters in America - IMAGE Magazine</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2025-10-08" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2025-10-08</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiakFVX3lxTE85TkxwQnQ2YnIyM2tnd284Q2FYdGpiV0pCWlFsdy16U05PTE8xd2tPRzNPY3hhb2hGUFJNdF8yUjBxUmdGeFl4bk4tSVNRZmsydEFqTld1em12ZjB4N0gzbHF5djJ6TlQwTkE?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Bus Éireann ads on why people travel - Marketing.ie</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-03-28" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-03-28</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxOR1Jzemcwc3RxbGFyYmhkRmZUbVlPRDNMSGFzTnhHek4yOW54YkhIeC1ZcDNyZW1Wdkw5TkNzYmlaSGl1aUhKSmJaWk5VNXlNX1FjelRESjRMcFpDU2ZFQ2RVU1hlZVFkUG5Fd3NKaW5CNEQzUGFNcDRQeFpQX0dpN2xuT2VUSHZFWWpCWkp0eEJZV1htOS12c1ZGR0hxbHViTlkwMWJSelZ3N0k?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">‘Short-sighted and damaging’: Calls for decision to end three Expressway services to be reversed - The Journal</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2025-12-10" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2025-12-10</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMic0FVX3lxTE9WTUh5WXVwNW9RTjVxLUpSYjJlTVBqOUhtaHhFQlhvQ05FZnMzUmwzSFF2NGRyYTQxV095bTAyX0ZSZEpLbllWUDdUTWRmVEhNU1FTZFotU3FQa3ZUak1WWGF0ZnpCTml2dEM4VkpLMm0tZGc?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Men who died in Fermanagh Bus Éireann collision named - RTE.ie</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-29" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-05-29</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMijwFBVV95cUxQM003SG5OazNZZlZwRXVaamNUbnNqUWhJZmc0anViTzRJVGVVU3hCY0JfRjROX1Uzcy1SWFIzV3Y3YmZwNTE3bmtpZ1ZmNUdtNU5hRklmSUNkWV9ka0hic0RycUdCZDlMTUxmc0NnMVNBeG5wdDdSUzFhQm9pUjJ5OWpydk40cE5PNVBWRjhyZw?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">A Skin Care Brand Tried to Run a Free Bus in Brooklyn. It Didn’t Last Long. - The New York Times</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-03-27" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-03-27</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxNTk9ZTTd5VWVLTGxKUVhpQWo5ZjZBN1ptdExZNldZbm5kU0VjbDlwWnlpanpwamNYQzZXaWlPNW1ZQzNSM2pBYktEc3RuZ0R3Sk1WckNXS0NKNURwVEhIaHVFaDlTTXFiMVdrek1KWTNQXzR0Tjk5R3M3VVc5Nzk2ZUtySGI1RjBZWXlCYWJUUWRQcmZicEtZWHB4eVlsQW9vSWFtN1FyWXVTVUE3aEpKY0Nn?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">School transport fees double for primary school children - The Journal</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-01-16" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-01-16</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMinwFBVV95cUxOR0dMQUsxUERrQWNVN0V6OGZrcmVVblk1QXRyZUI1U203aEhLQU0wbk9iNjNTYW5wcHM5MnlqU2h1blNuUUplNm1lVGZyV016aGJYVTRiUGxOZGZYTEkwdEpubmhwX3o0TEoxTWJ4WUFuczVhbG5wVm9kUGU1dEd4NW81a3dnSUV6bWRJODdGeVd2dEVEYUxiaVZ6NzZXbGs?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Two wines to pick up in the O’Briens January sale - The Irish Times</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2026-02-13" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-02-13</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiY0FVX3lxTE5EUnllSk9zSkdsTFhjYUcxZnpxNVFKR19vM2FOWmk0S1NIY015a1pONF9abFpnV3ZDVy1pVkNhSWdKRS1sTjd0RC1CS1BTT180eWJKMU9FOENVNUtoRlVsX2h4bw?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Wine with Leslie: Three bottles of wine I recommend for a Valentine's Day date - Irish Examiner</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="IE" data-date="2025-11-28" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2025-11-28</span><span class="text-base">🇮🇪</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxOaWJmelh4aUlPV3hpWWhPZDdMQmtHY1VSZnlKNHhncTlZTDUzY0lwTFY4T0paOTh1MGdXeGpGaDZ1VVlyOWRtVllmYVBsTXNlYkNfcUwzTm5Sel9oejZNd2NlQ0hmY2tXUlViMi11V21uTmthb1B2Q1IxODZFMU5CM05hblphNlJaUzhPODV1dUx1NGtGTWtlQXZOQnoyWHE1Q0tYaTlnMzI?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">John Wilson’s pick of wines to buy at O’Briens this month - The Irish Times</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2017-08-10" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2017-08-10</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMifEFVX3lxTE5zeDd1dmdBVzJvNi1oOW1yY0xlVzFibFFheklWWFBwSkZzTktFOHJwcDZmbzNsYVNvNFN3TzlvRDJqQTJYeFdOTzVuQmhxUDFERnNxcnVtemhMdVl4eVB6eDg1ZjVrWWgwRW9zelB1SWI5VU9xNFZkeWVSNm4?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">The Drive Home live from O’Briens Wine - wlrfm.com</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2016-09-02" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2016-09-02</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMigwFBVV95cUxQNk9Cby1PdVhyTkduRzdwOUVfYTE5WWVZNG1zdUdKeHNXQVVpMjJmM1ZuNHpjVkw4M3VWTlFNcm10b1E0clNhOWYtazF3STdhbXNhdjZCbHJ5ZTRnekIzM2RRc3NUQWNGSk9ybmRmTllCQ3A4M1RScUR3QTBzQ1BsdUdlNA?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Lynne Coyle, Master of Wine: “I’d probably be an Albariño” - TheTaste.ie</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">The Hockey News • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://thehockeynews.com/ahl/latest-news/ahl-notebook-wilkes-barre-scranton-s-embarrassing-playoff-attendance-coaches-on-the-move-tj-hughes-more" target="_blank">AHL Notebook: Wilkes-Barre Scranton’s Embarrassing Playoff Attendance, Coaches On The Move, TJ Hughes & More</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_4d1f023f-d5fa-46e9-8727-0a218f75fab7" target="_blank">Mississippi State vs. Louisiana baseball box score: Live stats from NCAA Baseball Championship Game 4</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="UK" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇬🇧</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_bd033a72-010f-4a5a-a857-7f3af54fc52b" target="_blank">Hasan Piker says UK has barred him, trashes 'unbelievable...power' of pro-Israel groups</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: UK</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_f79ceb64-e2e4-42f5-a22c-a2990f6abb4a" target="_blank">UCLA baseball's national title hopes shattered in season-ending loss to Saint Mary's</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_8fb6d405-3e7b-47a9-aa80-903ef312bf87" target="_blank">Knights willing to absorb pain in blocking shots</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_3d00a22f-9b7e-4de5-84a6-0f8700e992b7" target="_blank">Which Vikings Rookies Could Crack the Starting Lineup?</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_a60b3569-ab62-48c1-b172-098d899601d9" target="_blank">Hockey Canada Loses Again: Have Canadians Gone From Not Enough Skill To Too Much?</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_9657556c-c3f7-489a-968d-b4f1c286caee" target="_blank">The Athletic lists four Ohio State football transfers in top 100</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_9ff41b2b-8f72-46f5-b140-786744e52a79" target="_blank">No. 1 overall seed UCLA bounced by Saint Mary's in NCAA Regionals</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_2e50e7ce-ab34-4040-8c40-37b33ab93a55" target="_blank">Yankees use 13-run third inning to beat Athletics 13-8</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Github.com • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://github.com/Fimeg/RedFlag" target="_blank">Show HN: RedFlag – self-hosted update manager with a supply chain gate</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_8f6e8d69-32bd-4245-b6dc-36e7c6278cbb" target="_blank">Russell Henley reveals what made him the most nervous he’s ever been before Charles Schwab Challenge victory</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_8d5936be-d266-4e58-aae8-9236221ee370" target="_blank">Column: Pete Crow-Armstrong joins the long list of Chicago Cubs villains in St. Louis</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Omnivancemedia.com • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.omnivancemedia.com/blog/how-to-measure-law-firm-digital-marketing-roi" target="_blank">How to Measure Law Firm Digital Marketing ROI</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Alltoc.com • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://alltoc.com/food/what-did-arla-and-dmk-decide" target="_blank">What did Arla and DMK decide? #food</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Alltoc.com • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://alltoc.com/gaming/why-is-xbox-showing-ps5-logos-at-showcases" target="_blank">Why is Xbox showing PS5 logos at showcases? #gaming</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Dailymail.com • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.dailymail.com/news/article-15862353/Morning-Poll-blacklist-rowdy-air-passengers-good-idea.html" target="_blank">The Morning Poll: Is a blacklist for rowdy air passengers a good idea?</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">The Phinsider • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.thephinsider.com/miami-dolphins-news/119661/miami-dolphins-fans-on-the-nfl-going-too-far" target="_blank">Miami Dolphins Fans On The NFL Going Too Far</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">PCMag.com • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://me.pcmag.com/en/processors/37381/amd-revives-ryzen-7-5800x3d-cpu-to-celebrate-10-years-of-am4-platform" target="_blank">AMD Revives Ryzen 7 5800X3D CPU to Celebrate 10 Years of AM4 Platform</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">PCMag.com • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://uk.pcmag.com/processors/165262/amd-revives-ryzen-7-5800x3d-cpu-to-celebrate-10-years-of-am4-platform" target="_blank">AMD Revives Ryzen 7 5800X3D CPU to Celebrate 10 Years of AM4 Platform</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">R-bloggers.com • 2026-06-01</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.r-bloggers.com/2026/05/our-goodpractice-package-has-new-superpowers/" target="_blank">Our goodpractice Package Has New Superpowers</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-31" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-05-31</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_6d934b0e-1a66-4584-bd19-5efa64529f48" target="_blank">Shai Gilgeous-Alexander will give ‘zero input’ to Thunder’s offseason after emotional playoff exit</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-31" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Digitimes • 2026-05-31</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.digitimes.com/news/a20260528PD227/e-ink-growth-e-paper-display-2026.html" target="_blank">E Ink sees AI power crunch driving city, outdoor growth</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-31" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">The Punch • 2026-05-31</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://punchng.com/cooking-gas-prices-surge-despite-higher-domestic-supply/" target="_blank">Cooking gas prices surge despite higher domestic supply</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-31" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Missouristate.edu • 2026-05-31</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://jobs.missouristate.edu/postings/86172" target="_blank">Vice President for Marketing and Communications</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-31" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-05-31</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_cb4421cd-ca70-4744-acb7-8e5a2c4f45fd" target="_blank">Brazil thrash Panama 6-2 in World Cup send-off</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-31" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-05-31</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_0ed9bbe1-a96d-4c99-a117-ca76d2dc7fd7" target="_blank">Who is Judd Utermark? Ole Miss baseball star is Rebels home run king</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-31" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-05-31</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_8217f84b-5178-451d-aadd-6b470bc326e5" target="_blank">Yankees have wild 3rd inning, accomplish feat not seen since 2009</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-31" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Dailymail.com • 2026-05-31</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://www.dailymail.com/news/article-15833121/squatter-new-york-city-luxury-apartment-white-house-insider.html" target="_blank">Handsome DC insider who moved into grief-stricken family's luxury Manhattan apartment faces disgusting allegations about his privileged lifestyle</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        <div data-country="US" data-date="2026-05-31" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+            <div>
+                <div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Yahoo Entertainment • 2026-05-31</span><span class="text-base">🇺🇸</span></div>
+                <h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://consent.yahoo.com/v2/collectConsent?sessionId=1_cc-session_679e9675-4bfa-4a04-8981-49e7f1c7299b" target="_blank">Campbell County baseball team wins regional title with pitching</a></h2>
+            </div>
+            <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: US</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+        </div>
+        </div>
+
+        <div id="client-view" class="hidden space-y-12">
+            
+    <div class="client-brand-row border-b border-slate-200 pb-8 last:border-0">
+        <h3 class="text-sm font-mono tracking-widest text-slate-400 uppercase mb-4">🟢 Specsavers Accounts</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 empty:after:content-['No_live_developments_identified_within_this_cross-section_filter.'] empty:after:text-xs empty:after:font-sans empty:after:italic empty:after:text-slate-400 empty:after:py-4">
+            <div data-country="IE" data-date="2026-06-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+                <div><div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-06-01</span></div><h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMikwFBVV95cUxPdFJzVUMtZjZKUkM2cjB6VEVlT1BSREE2SzNGbXRXeVMtaWhpU1NhUGlNMk92SDdmRkE0ZFBKQnA3ZUNuX2NBNkpkTEh6WVRZX25CaUw0RDBxVVBpSVloaDRPcUVPOTJwTnhGSzNibUFPRnMxNW9rZ2pUOFVFZjJHMW15MnppU1JCNkllSkhLd1JOZUE?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Specsavers 'Mini Soaps' via 7RED Engine, EssenceMediacom - adnews.com.au</a></h2></div>
+                <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+            </div>
+            <div data-country="IE" data-date="2026-01-09" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+                <div><div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-01-09</span></div><h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiakFVX3lxTE5PN0xEazB3SlJWS3dIMW8tT2trWGZsTFVLMGhKNF85eXF3dDV3ZWR1a2xKVzVkbGxVYk01SWNaU0NUQmhUbjhJby1fX296a29hbDlpQ3l1WlNPSko3TERRYTRqRlZ4Q0VhY0E?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Specsavers sponsors Ian Dempsey show - Marketing.ie</a></h2></div>
+                <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+            </div>
+            <div data-country="IE" data-date="2026-05-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+                <div><div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-05-01</span></div><h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMic0FVX3lxTE02cTN4ZHMzODNVNXpCak5uX1U0YmpfRURJdFVSMkJMU1VJRV9LcWVEaEZzUEV2dUZLUXZVYlBFc2Q3N3dZMWh5di00bkdsQTI1RF83QTQ2QndGVHFEREVZUHVCZUpRN2dXVVZWZlIyY0YtcWs?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Neglecting the CTO and Specsavers’ tagline tweak: Your Marketing Week - Marketing Week</a></h2></div>
+                <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+            </div>
+            <div data-country="IE" data-date="2025-10-10" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+                <div><div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2025-10-10</span></div><h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxPMWFnUEhEejM5bHZ5c2UyTjVHWFZWUmRsRF9BZ2VGWDJLTjlUV28tWWIyMUtZcUhWQTVQQ3puRzVFUC1VWU1GSmRUaFhsZE50SVVORXhpUm5aUVp4UWxOaWxpay1rTEJLZXBYaExad1BWcDJ2WWwzQ3VCS0lkcEZRR19ENTFqa2FYNEdvX1EtNFV1NV9oMjlwcnlrUk9jRU84eUthSG9fNlNyc0lWSUo1eEgyQUl5SHM4?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Specsavers boosts bookings with AI-powered, full-funnel omnichannel strategy - The Trade Desk</a></h2></div>
+                <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+            </div>
+            <div data-country="IE" data-date="2026-05-05" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+                <div><div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-05-05</span></div><h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMimgFBVV95cUxOMGNQeEVqeWMyZ1pUemdQM25FQWpZMGxER1RYYXRDUzRwMFoyUzV0RGtRVzlZcHcyZ2QzME9BVllfOTkzVHJTX08zc3FTSTIzTnRuWmpSRFMzUzh1YnRfOWpDSGFWa0IxcWhSVXE0U2YzTzJqd2wwa2pkN0EycHpUX1hILTlyTmZSVFVKWVRlcjgyN0h6WUFfVHlR?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Specsavers expands ‘Should’ve’ line to push all services - DecisionMarketing</a></h2></div>
+                <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+            </div></div>
+    </div>
+    <div class="client-brand-row border-b border-slate-200 pb-8 last:border-0">
+        <h3 class="text-sm font-mono tracking-widest text-slate-400 uppercase mb-4">🟡 Kerrygold // Ornua Portfolio</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 empty:after:content-['No_live_developments_identified_within_this_cross-section_filter.'] empty:after:text-xs empty:after:font-sans empty:after:italic empty:after:text-slate-400 empty:after:py-4">
+            <div data-country="IE" data-date="2026-05-26" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+                <div><div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-05-26</span></div><h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMixwFBVV95cUxPRExQRjBueG90TEJrUDZuNVpWUnZxUks3MC1uYnFhUUlmcEtrcDFTbTZ6Zkc3SU5BaElxUzN6Q05ka0Jyc0dsUERVVHZNVTU0SnE2OUpsaW5IRjdXWVBEQTNHRGdGRzRPVDZJd3VtWmZpeVd5UmFNR2hmWlZndjFvaWdad1h4dENCUERGSGtIbWFZajhEbFJPLXB2c0EtQnRMU2FiYnRfRmtST3djZm40QXVITEJyT3prOXJJbE5QVVp0S0c2TUtN?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Kerrygold Launches 'Make It Gold With Kerrygold,' a Campaign Built on Flavor, Craft & Irish Heritage - Perishable News</a></h2></div>
+                <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+            </div>
+            <div data-country="IE" data-date="2026-05-27" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+                <div><div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-05-27</span></div><h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMihgFBVV95cUxNUXVWaUZrTFNXQTE2YnNRc1FTeDdZLWk4SHFjZVRYUDg0ZVVnTnVPXzNFLUZSeXVYc0dYbmJUYzlLbE5oSEM2cDNsM0pGMmp0UEx1WVBjWWxmUm9YNVA2a0lpWFJoaXhBRXVmbUc2MzI3OXhBMy1HaDN0OVdVSzVjRHZVU2x1Zw?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Elevate Your Culinary Experience: Kerrygold’s New Campaign - Food & Beverage Magazine</a></h2></div>
+                <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+            </div>
+            <div data-country="IE" data-date="2026-03-11" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+                <div><div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2026-03-11</span></div><h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMipgFBVV95cUxQeE5Vc2YwMFdiUTFQN1NiaVpKU2d6elNucHdtN29JaEF6MWtzMFNSQmhBMjBuQjBtSVRQWklnenFpTlNoOEJYdVEwUDVWaHBCTE5TWG1WenIxUUhkdUJjLUJkRERKWnZBVTFqS2RJZWtqNURjQ2pPLXEtYkp5N2U2Yno5TTRfSDFNNTI1Nnl4N1VibVJ0c0Mzck9JUzl5eXZNQ1k4eUFn?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Kerrygold Wants the World to Celebrate St. Patrick’s Day ‘The Irish Way’ - Little Black Book | LBBOnline</a></h2></div>
+                <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+            </div>
+            <div data-country="IE" data-date="2023-10-13" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+                <div><div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2023-10-13</span></div><h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMi4gFBVV95cUxQclY5LXFEbWQ3UV9SMDhrT2RNSl8yQUtMTEhYRzdPbTU1NUh3bTBSOXBVWWJnVFBnYXhOdEdSdHJBdkFCendKZFF3ZF93ZXhNbWZrSWc2Ul8yanZnZmdGVmtBdkNpN0daN01kZnJWSEtYUzBFZWs2NTRYYlBkcC15LXk4TVQwb1IxcEdsLXRmRDVjYUlnQ0ZQVjdEblV0OU9nLU5UTjAtcDMtaHFsdl9Zbm81c1FTVXhRNlh4cGhsWTUxM0pvWXRUb2l2dUhudVlsa1ZZNXdiWDdDQWlpN3A2eFJ3?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Kerrygold’s masterclass in modern marketing: An all expenses paid trip for butter influencers - The Irish Times</a></h2></div>
+                <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+            </div>
+            <div data-country="IE" data-date="2024-03-01" class="news-card bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 border border-gray-200 flex flex-col justify-between p-6">
+                <div><div class="flex justify-between items-start gap-2"><span class="text-xs font-mono text-slate-400 uppercase tracking-wider">Google News Index • 2024-03-01</span></div><h2 class="text-lg font-bold font-serif text-slate-900 mt-3 hover:text-red-600 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMi0AFBVV95cUxQOGhDeG01ZXZveEFEWEZzMVRQVTJMLXptNHdYcDg2c243UEc1cWd3UkF0QnpWWmRzS0VsRmgwOEpNNU14MU5hM0VSS1JHdHgycW40Zmd5aXhnVkU4WGhXNWRPdXBIUHJqbndVMTVrdDFqcXA1RGpCdUV1ZENWLTZwOHU4VmlHbDBOVVVGNW5xYlJ0QUhpVWdfd2N1QVNSdE9tbnRyenhSYzB3ZXVwblM3cnQySXNnckNSczI3Q3JtN2xpa1R1am1BbVZ5MnBrekVr?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">An Irish success story: how Róisín Hennerty made Kerrygold one of the best-selling butters in America - IMAGE Magazine</a></h2></div>
+                <div class="pt-4 border-t border-gray-100 mt-6 flex justify-between items-center text-xs font-mono text-slate-400"><span>Region: IE</span><span class="bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-sans text-[10px] font-bold">READ →</span></div>
+            </div></div>
+    </div>
+    <div class="client-brand-row border-b border-slate-200 pb-8 last:border-0">
+        <h3 class="text-sm font-mono tracking-widest text-slate-400 uppercase mb-4">🔴 Bus Éireann Accounts</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 empty:after:content-['No_live_developments_identified_within_this_cross-section_filter.'] empty:after:text-xs empty:after:font-sans empty:after:italic empty:after:text-slate-400 empty:after:py-4"></div>
+    </div>
+    <div class="client-brand-row border-b border-slate-200 pb-8 last:border-0">
+        <h3 class="text-sm font-mono tracking-widest text-slate-400 uppercase mb-4">🍇 O'Briens Wines</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 empty:after:content-['No_live_developments_identified_within_this_cross-section_filter.'] empty:after:text-xs empty:after:font-sans empty:after:italic empty:after:text-slate-400 empty:after:py-4"></div>
+    </div>
+        </div>
+
+        <div id="social-view" class="hidden space-y-12">
+            
+    <div class="social-brand-row border-b border-slate-200 pb-8 last:border-0">
+        <h3 class="text-sm font-mono tracking-widest text-slate-400 uppercase mb-4">💬 Specsavers Buzz</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 empty:after:content-['No_public_social_chatter_detected_on_open_channels_today.'] empty:after:text-xs empty:after:font-sans empty:after:italic empty:after:text-slate-400 empty:after:py-4">
+            <div data-date="2013-04-03" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2013-04-03</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/Specsavers/" target="_blank">Specsavers</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2011-09-08" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2011-09-08</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/britishproblems/" target="_blank">British Problems</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2011-11-22" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2011-11-22</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/AskUK/" target="_blank">Ask the United Kingdom</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-06-01" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-06-01</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/glasses/comments/1tu3m0q/disabled_son_another_pair_of_broken_glasses/" target="_blank">Disabled son, another pair of broken glasses.</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-06-01" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-06-01</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/PlasticFans/comments/1ttvm4q/i_have_a_confession/" target="_blank">I have a confession...</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-19" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-19</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiVkFVX3lxTE50NUxlaWNITjZvVjdIb2Z3LXhGcS1uMFd0d1dEcEhlQVhheHRPYUc5bDhJcFJWYVlCSkt2cGNDenB1WldBclNCQXBEd0dTejJ2VWNOSTl3?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Well that was awkward… 🙈 definitely should’ve gone to Specsavers! #WeFlyTogether - instagram.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-31" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-31</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiVkFVX3lxTFBCSWNiT0huTDJYMTUwZVExTklnM1p3SlY1UjY5N2s2TkpRNDU2LW9hMTF6dkhtME1UdkIxWm1oaHhVVS1rMWNFLWQ5a2lGSjZzWW9wNlpR?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Don't worry, we'll always be supportive 💚​ #Specsavers #ShouldveGoneToSpecsavers #WowOk​ 👓: 33597904 - instagram.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-25" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-25</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMi1AFBVV95cUxPdmJsU1kyYkFlbWxMM1hQU0tOYzBVeVVMTlp3N0xMcnV6enRqUHNjOUdoWmxOX0xzMWhUc3VkT0dhNjRGb2F0QTE3NWVaOVA2elFOcTZHcjhlQWg0M3BqTUVPWHc5MkRkajJPUUQ2dWZLUk94a1duLVZJN0JvU3kwYmFTZF9UTDVwaF9NRjVONW1YQ2E5eVljU09jVDFjUnFqVFRfcjNNb1hTOXJMQ3JSZ0FlUTJDaVY3eWNmci1VV3ZuUWtqOWpDMmZsWlR0REpEb3V2dA?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">... I’ve had a wonderful but rather eventful Bank Holiday Weekend in Edinburgh for a 10Km race around Arthur’s Seat as part of the Edinburgh Marathon Featival. First the good news …great weather, great event from Myrunningandfitness maicon & a PB! Howe - LinkedIn</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-30" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-30</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMivgFBVV95cUxQQTk4X2J6ZDJJWVpUQkxjMzNaa21qeGtrczRSRHFuS19uRzBLejJYQ2czSXlaa2lZblRFLTk2M1lLTjMyOGRZbXV6ZjBEYkY3djNWcmFPdU4waFJhbHpWcVFnQ0hhR2lEYmFaQlZTMGIycDFhOFd2NWFiNnYyeE5OeF9NTjdqM3BCMHRBWTBnRjIwYUl3Z3JYSkkxQkNURWJKYklKbHR6LW5XRElLa3ZEdWctNUI4dHktaVFmbkhn?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Worst day on the job: Specsavers Canada managing director Jane Hoban on leading through loss - LinkedIn</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-14" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-14</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxNY29mYTVjMkpOcmVhSDhaaFFNTG9qRkI2Qmh6ckhVNVpEeWhHMkxhV1JSRExZbERCYkprcmpJNUVoUURid3NzN0ZOT0FmY2hIczFKc3JiZmVkWlRPWGR1SW9SY3ZMblRPY2NpNHVsZ2d1SE1wSldhVVkyd2lJSGdaSXczQy1KZnE5WE1vLTRpQ2hveUdSUmg1UF94bUE1QW9YQXhadzF3SVp4Q1NhcWprdDdEamx4Zndh?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Tonight I had the pleasure of hosting a special Contact Lens Event for our #Scottish #Specsavers stores, attended by more than 140 clinicians, and featuring the internationally respected clinician, researcher and educator in contact lenses and ocular health — - LinkedIn</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div></div>
+    </div>
+    <div class="social-brand-row border-b border-slate-200 pb-8 last:border-0">
+        <h3 class="text-sm font-mono tracking-widest text-slate-400 uppercase mb-4">💬 Kerrygold Sentiment</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 empty:after:content-['No_public_social_chatter_detected_on_open_channels_today.'] empty:after:text-xs empty:after:font-sans empty:after:italic empty:after:text-slate-400 empty:after:py-4">
+            <div data-date="2009-05-20" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2009-05-20</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/grilledcheese/" target="_blank">Grilled Cheese</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2010-05-26" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2010-05-26</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/Costco/" target="_blank">Fulfilling Your Bulk Needs Since 1983</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2010-05-27" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2010-05-27</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/keto/" target="_blank">Keto: The Home for Ketogenic Diets</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-06-01" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-06-01</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/junkorexic/comments/1ttegxl/snacking/" target="_blank">Snacking...</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-06-01" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-06-01</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/Breadit/comments/1ttbwt3/breakfast_stromboli/" target="_blank">Breakfast Stromboli</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-25" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-25</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiqwFBVV95cUxQVzgzbThBUC00ZDVSdjc5YTRiNWdObWFWRVBxNl9zVTE4R3RiZnJScU9CTDlRY1VWOFVSLWJieUpNTk1mMzRQYUQyNkRIOTZpOHJBc0FOZ1Utd0VoQTY2aURLQjIzcWdrVlZzZkNlQkhuNUtPT1RfSnNqaXRRVGxyQUxUcUc0SjR0VkprUDJVRzYtRkN0NThybmdOcElrMGtzN0pBVlJTQThqLXc?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">'Butter 2026' Every year or so I paint a block of Irish butter. I'm always trying to outdo my last attempt, to achieve the classic expression of the subject. It's different every time and each picture has its individual merits and shortcomings, but this one, I think, is close - LinkedIn</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-27" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-27</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiY0FVX3lxTE44QW53Ml9HLVlUU3kxU2o3elNRQTR2VlhWUzkxN21zTjlIUmpnWVdRc3BNQXZDQW9NTmpJcGtnUjJ5Zl91LXpOYnlDZktOUEIzTllhT1l2YUJod2ttVi1NRDVuNA?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">These Irish chocolate chip cookies made with Kerrygold are dangerously good fresh from the oven. - x.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-23" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-23</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiVkFVX3lxTE5nWk8tTWo0NGdacXJxVmJsU0NuX010andlVVdHZk5DeGhtSDJDRnZSRlFHMDE1RkZ5VGtna3NIMENLQV9hVGtQNnlaNHY5c0V3TWFVdS1R?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">#AD You’ve never had a grilled cheese like this 🧀🥬🔥 kimchi + bulgogi + american cheese on sourdough. Make it next level with @KerrygoldUSA Salted Butter. It’s currently available in a 4-pack at Costco and offers a rich, creamy taste that you get from the swe - instagram.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-16" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-16</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMitgFBVV95cUxPWk9WMGhHUFJEM0hNMFNCM3VUUUlxX1JQSFREUHhuNkQzRmNPYW5BTGVLWHRLRS02M2lVNWxZZi1jT2otaTB6NGtLNnJNcXFIbEprZ2pfREtwNkpoSWhHQW9Cdl91LTBxN1JyZkZxR09ybjJibC05V1Q3dUdBYmRCMDZxYW1KaFNRclVEMG5Cck1nYTdGbUVjbzZrOGJmeHg5WXhPWHNYTXozMEhvTmkyYzRWWWhKdw?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Day 2 at the Ballymaloe Festival of Food, with Kerrygold a proud sponsor of the festival. Across the weekend, leading chefs use Kerrygold butter in their dishes, bringing its quality into their cooking, while festivalgoers enjoy sampling our products. Panel discus - LinkedIn</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-23" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-23</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiVkFVX3lxTE1qb1lhWFVJd3hXVldNZHpuREt3WGtsQmYzVmdJektPMHVRTVJfN0RLa2h3UnRQNGRPdUo2T3M5TmppVllpd0lSaUJFdUJyV3pNVkJiMVdB?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">#AD🧈 @KerrygoldUSA Irish Salted Butter is at @costco and if you have not made the switch yet, let me tell you why Kerrygold is my favorite butter at Costco! Kerrygold is crafted with milk from grass-fed Irish cows using traditional Irish churning, and you can tas - instagram.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div></div>
+    </div>
+    <div class="social-brand-row border-b border-slate-200 pb-8 last:border-0">
+        <h3 class="text-sm font-mono tracking-widest text-slate-400 uppercase mb-4">💬 Bus Éireann Public Mentions</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 empty:after:content-['No_public_social_chatter_detected_on_open_channels_today.'] empty:after:text-xs empty:after:font-sans empty:after:italic empty:after:text-slate-400 empty:after:py-4">
+            <div data-date="2008-03-03" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2008-03-03</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/ireland/" target="_blank">Ireland/Éire</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2010-03-15" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2010-03-15</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/cork/" target="_blank">Era why not shur?</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2025-04-03" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2025-04-03</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/buseireann/" target="_blank">buseireann</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-20" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-05-20</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/cork/comments/1tiu1rs/smashed_window_on_the_212/" target="_blank">Smashed Window on the 212</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-18" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-05-18</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/ireland/comments/1tgzbbe/even_though_we_have_tfi_locallink_bus_eireann_cie/" target="_blank">Even though we have TFI, local-link, bus Eireann, CIE, expressway, and government supported other bus groups, rural Ireland is a nightmare to navigate.</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-29" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-29</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiUkFVX3lxTE5IdDNxWXFTekVIY1BhSDl0alpGZVdrUjlhTThzNlJ2SXpNZmlFN2FabEE2SVVCWFBVRlhUNHR2YVhRZlcySkR3dWVtaG1Xb2d1SHc?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">The Irish Traveller Movement and the Traveller Apprenticeship Incentivisation Programme were delighted to partner with Bus Éireann in recording a video highlighting their commitment to Traveller employment and inclusive workplaces. We are really looking f - instagram.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-27" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-27</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiYEFVX3lxTE9Zd3BCV21KRGxZMTBhdUduVy1sT0tEVDVKNmVsUXQ5UlljSVVqZ1A2dTY2dHc1cEk5RTFEX0dtWExRbF96bzRnRlBpaWZDOTMyZFdHaGp1ZDRIcDJyUGNwLQ?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Bus Éireann is proud to unveil our new uniform – deigned by our people with professionalism and comfort with modern Ireland in mind. We look forward to customers seeing it across our network in the weeks ahead - x.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-29" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-29</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiYEFVX3lxTFByU1pFVUdjeFN5c2l2S21UdXp5b1pfUkt2SHd5Y2RoVHFSUTFKNzlkeHFfN3BQS3JGdmRIc0xZRmVIV2c2Ql9RdE5HX2R6TzVGS1BWUHFhZ1MtclVQeWpPbw?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Happy bank holiday weekend! All Bus Éireann services this Monday, 1 June will operate to a Sunday schedule. - x.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-21" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-21</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMi4AFBVV95cUxPWG1GQnNleklvSGNUR3NGRFJ3ZVo4RzZLYng5XzNnWWFRa3F1R3JTN1g5UkVVY2NINVpHbGxuRWNvMkV4d0trdEhOcTJVYzZwelF3R3FTWG1tUHl2X2Nkb0NKS2NLVmNPWXdLRVdrX0Z6UnZKV2thVVBTNFVFcmowTjJ2TzJidENaekp0YUJxcXRDUl9nQ3lMNFRhSWEzSnpYa1dQWUhUV2NLdnFRNk81WEFqMVRGRWJHQnVOLVEyZ042a2JyZ1o2Vko2a0xmRnpZaExNNDFGZXN1b1lkQTNGUw?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Bus Éireann and Dublin Bus (Bus Átha Cliath) are proud to be a main sponsor at this years WorldSkills Ireland event on in the The RDS from the 16th-18th of September. Be sure to drop by and say hi to our team over the course of the three day event! Jean O' - LinkedIn</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-19" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2026-05-19</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiUkFVX3lxTE1FVW0zdk0wVXVmclhFaktBRGVOM2pBNzQtRGZDdWVhejZhWHVnVWVNbGlXaHRrVDRmQUVGX0pleEQ5Y0p3b1VTWmxxaGpMMVdZV0E?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Bus Éireann is currently hiring across a few roles within our Finance Department - a great opportunity to join a company where you can learn, grow, and make an impact. Find out more or apply now at: https://www.linkedin.com/company/buseireann This is a 2- - instagram.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div></div>
+    </div>
+    <div class="social-brand-row border-b border-slate-200 pb-8 last:border-0">
+        <h3 class="text-sm font-mono tracking-widest text-slate-400 uppercase mb-4">💬 O'Briens Wines Social</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 empty:after:content-['No_public_social_chatter_detected_on_open_channels_today.'] empty:after:text-xs empty:after:font-sans empty:after:italic empty:after:text-slate-400 empty:after:py-4">
+            <div data-date="2026-05-31" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-05-31</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/HypeTracks/comments/1tsypze/best_new_melodic_ht_may_2026_393_tracks/" target="_blank">Best New Melodic H&T May 2026 (393 Tracks)</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-22" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-05-22</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/livemusicmelbourne/comments/1tk50n4/todays_gigs/" target="_blank">Today's gigs</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-12" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-05-12</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/HFY/comments/1tb482d/humans_for_hire_part_167/" target="_blank">[Humans for Hire] - Part 167</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-07" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-05-07</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/Troy/comments/1t6cb2l/find_your_fun_in_troy_this_week_57510/" target="_blank">Find your Fun in Troy this week (5/7-5/10)</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2026-05-07" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Reddit Discussion • 2026-05-07</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://www.reddit.com/r/Albany/comments/1t6c74c/find_your_fun_in_albany_this_week_57510/" target="_blank">Find your Fun in Albany this week (5/7-5/10)</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2021-11-24" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2021-11-24</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9PdDBjblVzcjg5MXF2VzU2VGpfNDBLNlNDbV9idGpKR0NLOTVWeTdvUzg0YzllMkZqOXRZWERoTEtVb1ZrMFRZQnVCbE9IeXFkQjJhaVd4YkNtc3RCQlp1a295WTktR1E?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">To kick off the @OBriensWine #BlackFridayDeals all our €3 #CraftBeer is down to €2.50 including these beauties from @TreatyCityBrew yes I said only €2.50 for this week only 🍻🍺🍻🍺 #Limerick - x.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2025-07-01" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2025-07-01</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiWkFVX3lxTE40dmdaajZXWFE0S3czLXM1T1RyNkdvZEdLbUxObEw4MjVtZkJHcWVDemJnVllnN3JfV29McTAtemtWb2VRUmpXZVdkNlI2bUNuRklET0RxbHZ4Zw?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Check out our App offers for this month. The fantastic wines from Chateau De Caraguilhes, you can sign for for the O'Briens app in store or online. #appoffers #chateadecaraguilhes #beaconsouthquarter - instagram.com</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2015-11-12" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2015-11-12</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiW0FVX3lxTE1Xc01rS1Q0LVY5R01ORDBaaklDVjRvSHB0NzV2V1ZsRGpDcWNqZkZtVG1QeS1iN2pOOTVSY19SUWQzU3RrMlRpTnY1RlRLajQtSksxbGFGRlNHZE0?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Holly Nolan - HR Manager at O'Briens Wine Beer Spirits - LinkedIn Ireland</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2021-12-07" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2021-12-07</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiVkFVX3lxTE13S2NtY2xKVHYxRHlfQXUxc3NjeWdmblV0ZU1ENUpzZU1pN2p4TFlBZEp5cUx1Q0hNR2U4ZmJoNy1XWExYdmF2ZVNpZHNZTFlBaVN2d3R3?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">Christmas Day Wines with Lynne Coyle MW, O'Briens Wine Director | Mixed Case 2021 - YouTube</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div>
+            <div data-date="2025-05-15" class="news-card bg-slate-900 text-white rounded-2xl shadow-xs border border-slate-800 flex flex-col justify-between p-6 hover:border-red-500 transition-all">
+                <div>
+                    <div class="flex justify-between items-center"><span class="text-[10px] font-mono uppercase bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md font-bold tracking-wider">💬 Social Post • 2025-05-15</span><span class="text-xs text-slate-500 font-mono">LIVE FEED</span></div>
+                    <h2 class="text-base font-medium font-sans mt-4 text-slate-100 hover:text-red-400 transition-colors leading-snug"><a href="https://news.google.com/rss/articles/CBMiVkFVX3lxTFBuNl93bURYUGVwdjdPZjRsbFJ6LU1XOUdVSnVJbWk3WXppdmR0NU9mYW41b05CanNpVWRUREM5eTZyYkVHODNqZXNwMW95M0ZhblJOWXBB?oc=5&hl=en-IE&gl=IE&ceid=IE:en" target="_blank">O'Briens Wine Bordeaux En Primeur 2024 - YouTube</a></h2>
+                </div>
+                <div class="pt-4 border-t border-slate-800 mt-6 flex justify-end text-[10px] font-mono text-slate-500"><span>VIEW SOURCE POST →</span></div>
+            </div></div>
+    </div>
+        </div>
+</main>
+
+    <script>
+        let currentCountry = 'all';
+        let currentMode = 'industry';
+        let currentDateRange = 'all';
+
+        const TODAY = new Date();
+
+        function syncFilters() {
+            const cards = document.querySelectorAll('.news-card');
+            
+            cards.forEach(card => {
+                const cardCountry = card.getAttribute('data-country') || 'IE';
+                const cardDateStr = card.getAttribute('data-date');
+                
+                let matchesCountry = (currentCountry === 'all' || cardCountry === currentCountry);
+                let matchesDate = true;
+
+                if (cardDateStr) {
+                    const cardDate = new Date(cardDateStr);
+                    const timeDiff = TODAY.getTime() - cardDate.getTime();
+                    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                    if (currentDateRange === 'year') {
+                        matchesDate = (cardDate.getFullYear() === TODAY.getFullYear());
+                    } else if (currentDateRange === '30') {
+                        matchesDate = (daysDiff >= 0 && daysDiff <= 30);
+                    } else if (currentDateRange === '7') {
+                        matchesDate = (daysDiff >= 0 && daysDiff <= 7);
+                    }
+                }
+
+                if (currentMode === 'industry') {
+                    if (matchesCountry && matchesDate) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                } else {
+                    if (matchesDate) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        function setViewMode(mode) {
+            currentMode = mode;
+            const indView = document.getElementById('industry-view');
+            const cliView = document.getElementById('client-view');
+            const socView = document.getElementById('social-view');
+            
+            const indBtn = document.getElementById('view-industry');
+            const cliBtn = document.getElementById('view-clients');
+            const socBtn = document.getElementById('view-social');
+
+            indView.classList.add('hidden');
+            cliView.classList.add('hidden');
+            socView.classList.add('hidden');
+            
+            indBtn.className = "text-slate-600 px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer hover:text-slate-900 transition-all";
+            cliBtn.className = "text-slate-600 px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer hover:text-slate-900 transition-all";
+            socBtn.className = "text-slate-600 px-4 py-2 rounded-lg text-xs font-semibold cursor-pointer hover:text-slate-900 transition-all";
+
+            if (mode === 'industry') {
+                indView.classList.remove('hidden');
+                indBtn.className = "bg-white text-slate-900 px-4 py-2 rounded-lg text-xs font-bold shadow-xs cursor-pointer transition-all";
+            } else if (mode === 'clients') {
+                cliView.classList.remove('hidden');
+                cliBtn.className = "bg-white text-slate-900 px-4 py-2 rounded-lg text-xs font-bold shadow-xs cursor-pointer transition-all";
+            } else if (mode === 'social') {
+                socView.classList.remove('hidden');
+                socBtn.className = "bg-white text-slate-900 px-4 py-2 rounded-lg text-xs font-bold shadow-xs cursor-pointer transition-all";
+            }
+            syncFilters();
+        }
+
+        function filterLocation(countryCode) {
+            currentCountry = countryCode;
+            const buttons = document.querySelectorAll('.loc-btn');
+            buttons.forEach(btn => {
+                btn.className = "loc-btn text-slate-600 px-4 py-1.5 rounded-lg text-xs font-semibold cursor-pointer hover:bg-white/60 transition-all";
+            });
+            event.currentTarget.className = "loc-btn bg-white text-slate-900 px-4 py-1.5 rounded-lg text-xs font-bold shadow-xs cursor-pointer";
+            syncFilters();
+        }
+
+        function filterDate(rangeCode) {
+            currentDateRange = rangeCode;
+            const buttons = document.querySelectorAll('.date-btn');
+            buttons.forEach(btn => {
+                btn.className = "date-btn text-slate-600 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer hover:bg-white/60 transition-all";
+            });
+            event.currentTarget.className = "date-btn bg-white text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold shadow-xs cursor-pointer";
+            syncFilters();
+        }
+    </script>
+
+</body>
+</html>
