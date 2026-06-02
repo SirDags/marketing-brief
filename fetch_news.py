@@ -238,8 +238,8 @@ html_start = """<!DOCTYPE html>
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 px-8 py-4 flex flex-col xl:flex-row justify-between items-center gap-4 shadow-xs">
         <div class="flex flex-col md:flex-row items-center gap-6 w-full xl:w-auto">
             <div>
-                <h1 class="text-2xl font-black tracking-tighter text-slate-900 font-serif">MKTG <span class="text-red-600">//</span> BRIEF</h1>
-                <p class="text-[11px] font-mono uppercase tracking-widest text-slate-400 mt-0.5">Advertising Intelligence Depot // Dublin</p>
+                <h1 class="text-2xl font-black tracking-tighter text-slate-900 font-serif">The <span class="text-red-600">AD</span>gregator</h1>
+                <p class="text-[11px] font-mono uppercase tracking-widest text-slate-400 mt-0.5">Nico Dagdag Alpha Test</p>
             </div>
             
             <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 w-full md:w-auto gap-1">
